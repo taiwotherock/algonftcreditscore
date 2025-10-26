@@ -1,0 +1,34 @@
+Use command prompt
+
+algokit task ipfs upload --file metadata.json --name "CreditScoreNFT"
+
+algokit init -t python
+
+algokit project run build
+
+algokit project deploy testnet
+
+pip install boto3
+pip install Pillow
+pip install dotenv
+pip install web3
+
+pip install fastapi uvicorn python-multipart Pillow openai
+
+uvicorn your_script_name:app --reload --host 0.0.0.0 --port 8075
+
+uvicorn fastapi_server:app --reload --host 0.0.0.0 --port 8003
+
+pip install playwright
+
+uvicorn fastapi_server:app --reload --host 0.0.0.0 --port 5406
+
+
+
+algokit generate client smart_contracts/artifacts
+
+uvicorn fastapi_server:app --reload --host 0.0.0.0 --port 5406
+
+git remote add origin https://github.com/taiwotherock/algonftcreditscore.git
+git branch -M main
+git push -u origin main

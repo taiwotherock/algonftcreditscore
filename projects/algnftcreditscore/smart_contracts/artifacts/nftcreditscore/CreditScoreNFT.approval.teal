@@ -1,0 +1,380 @@
+#pragma version 11
+#pragma typetrack false
+
+// algopy.arc4.ARC4Contract.approval_program() -> uint64:
+main:
+    intcblock 1 8 32 0
+    bytecblock "bcsnft_" 0x151f7c75 "bcsaddr_"
+    // smart_contracts/nftcreditscore/contract.py:25
+    // class CreditScoreNFT(ARC4Contract):
+    txn NumAppArgs
+    bz main___algopy_default_create@18
+    txn OnCompletion
+    !
+    assert // OnCompletion must be NoOp
+    txn ApplicationID
+    assert
+    pushbytess 0xc259d40c 0x22bf9315 0x91c9442f 0x9797fb5f 0x3c99f817 0x1fcfc44a 0xc8d5518d 0x9b4aead4 0x02bece11 // method "create(address,string)void", method "mint(uint64,address,uint64,uint64,string)void", method "get_credit_info(uint64)(address,uint64,uint64,string)", method "get_credit_info_by_address(address)(address,uint64,uint64,string)", method "get_metadata_url(uint64)string", method "update_credit_info_by_address(address,uint64,uint64)void", method "arc72_ownerOf(uint64)address", method "arc72_transferFrom(address,address,uint64)void", method "hello(string)string"
+    txna ApplicationArgs 0
+    match create mint get_credit_info get_credit_info_by_address get_metadata_url update_credit_info_by_address arc72_ownerOf arc72_transferFrom hello
+    err
+
+main___algopy_default_create@18:
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    assert // OnCompletion must be NoOp && can only call when creating
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.create[routing]() -> void:
+create:
+    // smart_contracts/nftcreditscore/contract.py:36
+    // @abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_2 // 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 2
+    dup
+    intc_3 // 0
+    extract_uint16 // on error: invalid array length header
+    pushint 2 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    // smart_contracts/nftcreditscore/contract.py:38
+    // self.admin = admin
+    pushbytes "admin"
+    uncover 2
+    app_global_put
+    // smart_contracts/nftcreditscore/contract.py:39
+    // self.metadata_ipfs = metadata_ipfs
+    pushbytes "metadata_ipfs"
+    swap
+    app_global_put
+    // smart_contracts/nftcreditscore/contract.py:36
+    // @abimethod
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.mint[routing]() -> void:
+mint:
+    // smart_contracts/nftcreditscore/contract.py:41
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    txna ApplicationArgs 2
+    dup
+    len
+    intc_2 // 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 3
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    txna ApplicationArgs 4
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    txna ApplicationArgs 5
+    dup
+    intc_3 // 0
+    extract_uint16 // on error: invalid array length header
+    pushint 2 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    // smart_contracts/nftcreditscore/contract.py:44-45
+    // #assert Txn.sender == self.admin, "Only admin can update credit info"
+    // info = CreditInfo(owner, limit, score,url)
+    dig 3
+    uncover 3
+    concat
+    uncover 2
+    concat
+    pushbytes 0x0032
+    concat
+    swap
+    concat
+    // smart_contracts/nftcreditscore/contract.py:46
+    // self.nft_map[tokenId] = info.copy()
+    bytec_0 // "bcsnft_"
+    dig 3
+    concat
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    // smart_contracts/nftcreditscore/contract.py:47
+    // self.address_map[owner] = tokenId
+    bytec_2 // "bcsaddr_"
+    swap
+    concat
+    swap
+    box_put
+    // smart_contracts/nftcreditscore/contract.py:41
+    // @arc4.abimethod
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.get_credit_info[routing]() -> void:
+get_credit_info:
+    // smart_contracts/nftcreditscore/contract.py:49
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/nftcreditscore/contract.py:51
+    // return self.nft_map[tokenId]
+    bytec_0 // "bcsnft_"
+    swap
+    concat
+    box_get
+    assert // check self.nft_map entry exists
+    // smart_contracts/nftcreditscore/contract.py:49
+    // @arc4.abimethod
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.get_credit_info_by_address[routing]() -> void:
+get_credit_info_by_address:
+    // smart_contracts/nftcreditscore/contract.py:53
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_2 // 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    // smart_contracts/nftcreditscore/contract.py:55
+    // tokenId = self.address_map[owner]
+    bytec_2 // "bcsaddr_"
+    swap
+    concat
+    box_get
+    assert // check self.address_map entry exists
+    // smart_contracts/nftcreditscore/contract.py:56
+    // return self.nft_map[tokenId]
+    bytec_0 // "bcsnft_"
+    swap
+    concat
+    box_get
+    assert // check self.nft_map entry exists
+    // smart_contracts/nftcreditscore/contract.py:53
+    // @arc4.abimethod
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.get_metadata_url[routing]() -> void:
+get_metadata_url:
+    // smart_contracts/nftcreditscore/contract.py:58
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/nftcreditscore/contract.py:60
+    // return self.nft_map[tokenId].metadata_url
+    bytec_0 // "bcsnft_"
+    swap
+    concat
+    box_get
+    assert // check self.nft_map entry exists
+    dup
+    pushint 48 // 48
+    extract_uint16
+    dig 1
+    len
+    substring3
+    // smart_contracts/nftcreditscore/contract.py:58
+    // @arc4.abimethod
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.update_credit_info_by_address[routing]() -> void:
+update_credit_info_by_address:
+    // smart_contracts/nftcreditscore/contract.py:62
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_2 // 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 2
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    txna ApplicationArgs 3
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/nftcreditscore/contract.py:64-65
+    // #assert Txn.sender == self.admin, "Only admin can update credit info"
+    // tokenId = self.address_map[owner]
+    bytec_2 // "bcsaddr_"
+    uncover 3
+    concat
+    box_get
+    assert // check self.address_map entry exists
+    // smart_contracts/nftcreditscore/contract.py:66
+    // info = self.nft_map[tokenId].copy()
+    bytec_0 // "bcsnft_"
+    swap
+    concat
+    dup
+    box_get
+    assert // check self.nft_map entry exists
+    // smart_contracts/nftcreditscore/contract.py:67
+    // info.limit = new_limit
+    uncover 3
+    replace2 32
+    // smart_contracts/nftcreditscore/contract.py:68
+    // info.score = new_score
+    uncover 2
+    replace2 40
+    // smart_contracts/nftcreditscore/contract.py:69
+    // self.nft_map[tokenId] = info.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    // smart_contracts/nftcreditscore/contract.py:62
+    // @arc4.abimethod
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.arc72_ownerOf[routing]() -> void:
+arc72_ownerOf:
+    // smart_contracts/nftcreditscore/contract.py:71
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/nftcreditscore/contract.py:73
+    // return self.nft_map[tokenId].owner
+    bytec_0 // "bcsnft_"
+    swap
+    concat
+    intc_3 // 0
+    intc_2 // 32
+    box_extract
+    // smart_contracts/nftcreditscore/contract.py:71
+    // @arc4.abimethod
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.arc72_transferFrom[routing]() -> void:
+arc72_transferFrom:
+    // smart_contracts/nftcreditscore/contract.py:75
+    // @arc4.abimethod
+    txna ApplicationArgs 1
+    len
+    intc_2 // 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 2
+    len
+    intc_2 // 32
+    ==
+    assert // invalid number of bytes for arc4.static_array<arc4.uint8, 32>
+    txna ApplicationArgs 3
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    // smart_contracts/nftcreditscore/contract.py:77-78
+    // # Soulbound: disallow all transfers
+    // assert False, "This NFT is soulbound and cannot be transferred"
+    err // This NFT is soulbound and cannot be transferred
+
+
+// smart_contracts.nftcreditscore.contract.CreditScoreNFT.hello[routing]() -> void:
+hello:
+    // smart_contracts/nftcreditscore/contract.py:80
+    // @abimethod()
+    txna ApplicationArgs 1
+    dup
+    intc_3 // 0
+    extract_uint16 // on error: invalid array length header
+    pushint 2 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // smart_contracts/nftcreditscore/contract.py:82
+    // return "Hello, " + name
+    pushbytes "Hello, "
+    swap
+    concat
+    // smart_contracts/nftcreditscore/contract.py:80
+    // @abimethod()
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
