@@ -941,20 +941,6 @@ files = [
 ]
 
 [[package]]
-name = "dotenv"
-version = "0.9.9"
-description = "Deprecated package"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "dotenv-0.9.9-py2.py3-none-any.whl", hash = "sha256:29cf74a087b31dafdb5a446b6d7e11cbce8ed2741540e2339c69fbef92c94ce9"},
-]
-
-[package.dependencies]
-python-dotenv = "*"
-
-[[package]]
 name = "ecdsa"
 version = "0.19.1"
 description = "ECDSA cryptographic signature library (pure python)"
@@ -2382,14 +2368,14 @@ testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "python-dotenv"
-version = "1.2.1"
+version = "1.1.1"
 description = "Read key-value pairs from a .env file and set them as environment variables"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "python_dotenv-1.2.1-py3-none-any.whl", hash = "sha256:b81ee9561e9ca4004139c6cbba3a238c32b03e4894671e181b671e8cb8425d61"},
-    {file = "python_dotenv-1.2.1.tar.gz", hash = "sha256:42667e897e16ab0d66954af0e60a9caa94f0fd4ecf3aaf6d2d260eec1aa36ad6"},
+    {file = "python_dotenv-1.1.1-py3-none-any.whl", hash = "sha256:31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc"},
+    {file = "python_dotenv-1.1.1.tar.gz", hash = "sha256:a8a6399716257f45be6a007360200409fce5cda2661e3dec71d23dc15f6189ab"},
 ]
 
 [package.extras]
@@ -2905,4 +2891,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "19c2d360f7b644ee75f0de0de47f295cb1eee89340387c3d77f2be5c34d195fe"
+content-hash = "745b647cee5697dc2e8ca9cda9d0cf873b5119b3e002715982e5a0d73781b066"
